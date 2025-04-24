@@ -1,0 +1,62 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "jupytergis-tiler"
+dynamic = ["version"]
+description = "Tiler layer for JupyterGIS"
+license = { file = "LICENSE" }
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [
+    { name = "David Brochart", email = "david.brochart@gmail.com" },
+]
+keywords = [
+    "jupyter",
+    "gis",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+dependencies = [
+    "jupytergis",
+    "jupyter_server",
+    "httpx",
+    "tornado",
+    "anyio",
+    "anycorn",
+    "fastapi",
+    "titiler",
+]
+
+[tool.hatch.version]
+path = "src/jupytergis/tiler/__init__.py"
+
+[tool.hatch.build.targets.wheel.shared-data]
+"etc/jupyter/jupyter_server_config.d" = "etc/jupyter/jupyter_server_config.d"
+
+[tool.hatch.build.targets.wheel]
+ignore-vcs = true
+packages = ["src/jupytergis"]
+
+[tool.ruff]
+line-length = 99
+lint.select = [
+    "ASYNC",        # flake8-async
+    "E", "F", "W",  # default Flake8
+    "G",            # flake8-logging-format
+    "I",            # isort
+    "ISC",          # flake8-implicit-str-concat
+    "PGH",          # pygrep-hooks
+    "RUF100",       # unused noqa (yesqa)
+    "UP",           # pyupgrade
+]
