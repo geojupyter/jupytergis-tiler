@@ -1,7 +1,7 @@
 {
   "ServerApp": {
     "jpserver_extensions": {
-      "jupytergis_server": true
+      "jupytergis.tiler": true
     }
   }
 }

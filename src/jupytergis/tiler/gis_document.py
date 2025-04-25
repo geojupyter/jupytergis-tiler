@@ -9,7 +9,7 @@ from anyio import connect_tcp, create_task_group
 from fastapi import FastAPI
 from jupytergis import GISDocument as _GISDocument
 from jupytergis_lab.notebook.gis_document import OBJECT_FACTORY
-from jupytergis_lab.notebook.objects import SourceType
+from jupytergis_lab.notebook.objects import LayerType, SourceType
 from titiler.xarray.factory import TilerFactory
 from titiler.xarray.extensions import VariablesExtension
 
@@ -91,7 +91,7 @@ class GISDocument(_GISDocument):
             params["rescale"] = f"{rescale[0]},{rescale[1]}"
         source_id = str(uuid4())
         url = (
-            f"/jupytergis/{source_id}/tiles/WebMercatorQuad/"
+            f"/jupytergis_tiler/{source_id}/tiles/WebMercatorQuad/"
             + "{z}/{x}/{y}.png?"
             + urlencode(params)
         )
