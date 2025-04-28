@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "jupytergis-tiler"
-version = "0.1.0"
+version = "0.1.1"
 description = "Tiler layer for JupyterGIS"
 license = { file = "LICENSE" }
 readme = "README.md"
