@@ -25,6 +25,7 @@ class GISDocument(_GISDocument):
     async def _start_tile_server(self):
         self._tile_server_app = FastAPI()
         config = Config()
+        config.bind = "127.0.0.1:0"
         async with create_task_group() as tg:
             binds = await tg.start(
                 partial(
