@@ -36,6 +36,8 @@ dependencies = [
     "anycorn",
     "fastapi",
     "titiler",
+    "rio-tiler",
+    "xarray",
 ]
 
 [tool.hatch.version]
