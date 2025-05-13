@@ -1,4 +1,5 @@
 from asyncio import Event, Lock, Task, create_task
+from collections.abc import Callable
 from functools import partial
 from uuid import uuid4
 from urllib.parse import urlencode
@@ -10,6 +11,8 @@ from jupytergis import GISDocument as _GISDocument
 from jupytergis_lab.notebook.gis_document import OBJECT_FACTORY
 from jupytergis_lab.notebook.objects import LayerType, SourceType
 from rio_tiler.io.xarray import XarrayReader
+from titiler.core.algorithm import algorithms as default_algorithms
+from titiler.core.algorithm import Algorithms, BaseAlgorithm
 from titiler.core.dependencies import DefaultDependency
 from titiler.xarray.factory import TilerFactory
 from xarray import DataArray
@@ -49,12 +52,22 @@ class GISDocument(_GISDocument):
                     self._tile_server_started.set()
                     break
 
-    def _include_tile_server_router(self, source_id: str, data_array: DataArray):
+    def _include_tile_server_router(
+        self,
+        source_id: str,
+        data_array: DataArray,
+        algorithm: BaseAlgorithm | None = None,
+    ):
+        algorithms = default_algorithms
+        if algorithm is not None:
+            algorithms = default_algorithms.register({"algorithm": algorithm})
+
         tiler = TilerFactory(
             router_prefix=f"/{source_id}",
             reader=XarrayReader,
             path_dependency=lambda:data_array,
             reader_dependency=DefaultDependency,
+            process_dependency=algorithms.dependency,
         )
         self._tile_server_app.include_router(tiler.router, prefix=f"/{source_id}")
 
@@ -77,6 +90,7 @@ class GISDocument(_GISDocument):
         scale: int = 1,
         name: str = "Tiler Layer",
         opacity: float = 1,
+        algorithm: BaseAlgorithm | None = None,
     ):
         await self.start_tile_server()
 
@@ -87,6 +101,8 @@ class GISDocument(_GISDocument):
         }
         if rescale is not None:
             params["rescale"] = f"{rescale[0]},{rescale[1]}"
+        if algorithm is not None:
+            params["algorithm"] = "algorithm"
         source_id = str(uuid4())
         url = (
             f"/jupytergis_tiler/{source_id}/tiles/WebMercatorQuad/"
@@ -109,5 +125,5 @@ class GISDocument(_GISDocument):
             "visible": True,
             "parameters": {"source": source_id, "opacity": opacity},
         }
-        self._include_tile_server_router(source_id, data_array)
+        self._include_tile_server_router(source_id, data_array, algorithm)
         return self._add_layer(OBJECT_FACTORY.create_layer(layer, self))
