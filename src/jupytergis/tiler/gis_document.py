@@ -91,23 +91,26 @@ class GISDocument(_GISDocument):
         name: str = "Tiler Layer",
         opacity: float = 1,
         algorithm: BaseAlgorithm | None = None,
+        **params,
     ):
         await self.start_tile_server()
 
-        params = {
+        _params = {
             "server_url": self._tile_server_url,
             "scale": str(scale),
             "colormap_name": colormap_name,
+            "reproject": "max",
+            **params,
         }
         if rescale is not None:
-            params["rescale"] = f"{rescale[0]},{rescale[1]}"
+            _params["rescale"] = f"{rescale[0]},{rescale[1]}"
         if algorithm is not None:
-            params["algorithm"] = "algorithm"
+            _params["algorithm"] = "algorithm"
         source_id = str(uuid4())
         url = (
             f"/jupytergis_tiler/{source_id}/tiles/WebMercatorQuad/"
             + "{z}/{x}/{y}.png?"
-            + urlencode(params)
+            + urlencode(_params)
         )
         source = {
             "type": SourceType.RasterSource,
