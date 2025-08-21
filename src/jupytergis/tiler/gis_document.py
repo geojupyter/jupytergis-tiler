@@ -126,6 +126,7 @@ class GISDocument(_GISDocument):
             "type": LayerType.RasterLayer,
             "name": name,
             "visible": True,
+            "transient": True,
             "parameters": {"source": source_id, "opacity": opacity},
         }
         self._include_tile_server_router(source_id, data_array, algorithm)
