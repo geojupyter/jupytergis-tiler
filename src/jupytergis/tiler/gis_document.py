@@ -1,21 +1,21 @@
 from asyncio import Event, Lock, Task, create_task
-from collections.abc import Callable
 from functools import partial
-from uuid import uuid4
 from urllib.parse import urlencode
+from uuid import uuid4
 
 from anycorn import Config, serve
 from anyio import connect_tcp, create_task_group
 from fastapi import FastAPI
-from jupytergis import GISDocument as _GISDocument
+from jupytergis_core.schema import LayerType, SourceType
 from jupytergis_lab.notebook.gis_document import OBJECT_FACTORY
-from jupytergis_lab.notebook.objects import LayerType, SourceType
 from rio_tiler.io.xarray import XarrayReader
+from titiler.core.algorithm import BaseAlgorithm
 from titiler.core.algorithm import algorithms as default_algorithms
-from titiler.core.algorithm import Algorithms, BaseAlgorithm
 from titiler.core.dependencies import DefaultDependency
 from titiler.xarray.factory import TilerFactory
 from xarray import DataArray
+
+from jupytergis import GISDocument as _GISDocument
 
 
 class GISDocument(_GISDocument):
@@ -65,7 +65,7 @@ class GISDocument(_GISDocument):
         tiler = TilerFactory(
             router_prefix=f"/{source_id}",
             reader=XarrayReader,
-            path_dependency=lambda:data_array,
+            path_dependency=lambda: data_array,
             reader_dependency=DefaultDependency,
             process_dependency=algorithms.dependency,
         )
@@ -108,9 +108,8 @@ class GISDocument(_GISDocument):
             _params["algorithm"] = "algorithm"
         source_id = str(uuid4())
         url = (
-            f"/jupytergis_tiler/{source_id}/tiles/WebMercatorQuad/"
-            + "{z}/{x}/{y}.png?"
-            + urlencode(_params)
+            f"/jupytergis_tiler/{source_id}/tiles/WebMercatorQuad/{{z}}/{{x}}/{{y}}.png?"
+            f"{urlencode(_params)}"
         )
         source = {
             "type": SourceType.RasterSource,

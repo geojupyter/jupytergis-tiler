@@ -1,5 +1,6 @@
-from .handler import JupyterGISHandler
 from jupyter_server.utils import url_path_join
+
+from .handler import JupyterGISHandler
 
 
 def _load_jupyter_server_extension(serverapp):
