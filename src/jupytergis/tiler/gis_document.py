@@ -8,8 +8,8 @@ from anycorn import Config, serve
 from anyio import connect_tcp, create_task_group
 from fastapi import FastAPI
 from jupytergis import GISDocument as _GISDocument
+from jupytergis_core.schema import LayerType, SourceType
 from jupytergis_lab.notebook.gis_document import OBJECT_FACTORY
-from jupytergis_lab.notebook.objects import LayerType, SourceType
 from rio_tiler.io.xarray import XarrayReader
 from titiler.core.algorithm import algorithms as default_algorithms
 from titiler.core.algorithm import Algorithms, BaseAlgorithm
