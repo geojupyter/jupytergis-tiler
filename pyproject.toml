@@ -28,7 +28,7 @@ classifiers = [
     "Programming Language :: Python :: 3.14",
 ]
 dependencies = [
-    "jupytergis >=0.9.2,<0.12",
+    "jupytergis >=0.11,<0.12",
     "jupyter_server",
     "httpx",
     "tornado",
