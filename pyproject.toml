@@ -28,8 +28,7 @@ classifiers = [
     "Programming Language :: Python :: 3.14",
 ]
 dependencies = [
-    "jupytergis >=0.9.2,<0.10",
-    "jupyterlab <4.5",  # until jupytergis supports jupyter-collaboration 4
+    "jupytergis",
     "jupyter_server",
     "httpx",
     "tornado",
