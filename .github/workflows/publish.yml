@@ -19,7 +19,7 @@ jobs:
       - run: |
           pip install hatch "hatchling!=1.26.0"
           hatch build
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: dist
           path: dist
