@@ -8,7 +8,7 @@ version = "0.2.1"
 description = "Tiler layer for JupyterGIS"
 license = { file = "LICENSE" }
 readme = "README.md"
-requires-python = ">=3.10,<3.14"  # rasterio doesn't have wheels for python 3.14 yet
+requires-python = ">=3.10"
 authors = [
     { name = "David Brochart", email = "david.brochart@gmail.com" },
 ]
