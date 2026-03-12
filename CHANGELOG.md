@@ -1,5 +1,9 @@
 # Version history
 
+## 0.2.2
+
+- Allow python >=3.14.
+
 ## 0.2.1
 
 - Bump JupyterGIS `>=0.11,<0.12`.
