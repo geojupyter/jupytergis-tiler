@@ -10,4 +10,7 @@ class JupyterGISHandler(JupyterHandler):
         server_url = params.pop("server_url")
         async with httpx.AsyncClient() as client:
             r = await client.get(f"{server_url}/{path}", params=params)
+            self.set_status(r.status_code)
+            if content_type := r.headers.get("content-type"):
+                self.set_header("Content-Type", content_type)
             self.write(r.content)
