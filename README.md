@@ -10,9 +10,6 @@ A JupyterGIS extension for creating and serving raster layers using your own dat
 
 Rasterio currently doesn't ship wheels for Python 3.14, so be sure to pin `python <3.14` for now.
 
-Also, there is currently an incompatibility between JupyterLab 4.5 and jupyter-collaboration 3.
-Until JupyterGIS supports jupyter-collaboration 4, you should pin `jupyterlab <4.5`.
-
 ```bash
 pip install jupytergis-tiler
 ```
