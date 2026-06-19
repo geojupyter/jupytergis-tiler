@@ -2,6 +2,13 @@
 <video src="https://github.com/user-attachments/assets/5c2d669a-ff8c-4a66-97e3-1845220fb819" width="80%" controls></video>
 </p>
 
+> [!IMPORTANT]
+>
+> Development of this functionality has moved to
+> [jupyter-tiler](https://github.com/geojupyter/jupyter-tiler).
+> Instead of installing this package, we recommend installing
+> JupyterGIS with the optional "tiler" dependency group, `jupytergis[tiler]`.
+
 # jupytergis-tiler
 
 A JupyterGIS extension for creating and serving raster layers using your own data.
