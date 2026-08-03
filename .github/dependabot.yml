@@ -3,15 +3,11 @@ updates:
   - package-ecosystem: pip
     directory: "/"
     schedule:
-      interval: daily
-      time: "04:00"
-    open-pull-requests-limit: 10
-    reviewers:
-      - davidbrochart
+      interval: "quarterly"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "quarterly"
     groups:
       gha-dependencies:
         patterns:
