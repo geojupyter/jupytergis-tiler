@@ -1,3 +1,4 @@
+import os
 from asyncio import Event, Lock, Task, create_task
 from functools import partial
 from urllib.parse import urlencode
@@ -107,8 +108,10 @@ class GISDocument(_GISDocument):
         if algorithm is not None:
             _params["algorithm"] = "algorithm"
         source_id = str(uuid4())
+
+        base_url = os.environ.get("JUPYTERHUB_SERVICE_PREFIX", "/").rstrip("/")
         url = (
-            f"/jupytergis_tiler/{source_id}/tiles/WebMercatorQuad/{{z}}/{{x}}/{{y}}.png?"
+            f"{base_url}/jupytergis_tiler/{source_id}/tiles/WebMercatorQuad/{{z}}/{{x}}/{{y}}.png?"
             f"{urlencode(_params)}"
         )
         source = {
